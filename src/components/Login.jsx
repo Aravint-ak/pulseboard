@@ -9,10 +9,7 @@ export default function Login() {
     const [message, setMessage] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
-    const callBackURL =
-        import.meta.env.VITE_VERSEL_URL ||
-        window.location.origin; // fallback to current origin
-    console.log('callBackURL: ', callBackURL);
+    const callBackURL = import.meta.env.VITE_VERSEL_URL 
 
     useEffect(() => {
         const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
