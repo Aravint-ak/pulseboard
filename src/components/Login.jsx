@@ -9,8 +9,8 @@ export default function Login() {
   const [message, setMessage] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const callBackURL= import.meta.env.VITE_VERSEL_URL
 
-  // Handle OTP redirect (when user clicks magic link)
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session) {
@@ -18,7 +18,6 @@ export default function Login() {
       }
     });
 
-    // Check for OTP token in URL (e.g., after clicking magic link)
     const urlParams = new URLSearchParams(location.search);
     const token = urlParams.get('token');
     if (token) {
@@ -40,7 +39,7 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: 'http://localhost:5173/login', // Update for production
+        emailRedirectTo: `${callBackURL}/login`,
       },
     });
 
